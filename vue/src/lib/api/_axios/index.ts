@@ -1,14 +1,16 @@
 /* eslint-disable no-extra-boolean-cast */
 import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import type { IInterceptors, IDefultConfig, IRequest } from "./interface";
-import { LoadingInstance } from "element-plus/lib/components/loading/src/loading";
+import type { IInterceptors, IDefultConfig, ILoadingConfig } from "./interface";
+import { LoadingInstance } from "element-plus/lib/components/loading/src/loading"; //查看service的返回值是createLoadingComponent其型別為LoadingInstance
+import { LoadingOptions } from "element-plus/lib/components/loading/src/types";
+
 import { ElLoading } from "element-plus";
 
 export default class _axios {
   instance: AxiosInstance;
   interceptors?: IInterceptors;
-  loading?: LoadingInstance; //查看service的返回值是createLoadingComponent其型別為LoadingInstance
+  loading?: LoadingInstance;
 
   constructor(defaultConfig: IDefultConfig) {
     this.instance = axios.create(defaultConfig); //用create並傳入config產生實例，此舉將使實例包含自定義的baseUrl,timeout...等通用屬性
@@ -38,11 +40,11 @@ export default class _axios {
       },
     );
   }
-  onLoading(config?: any) {
+  onLoading(config: LoadingOptions) {
     this.loading = ElLoading.service({
-      lock: true,
-      text: "Loading",
-      background: "rgba(0, 0, 0, 0.7)",
+      lock: config.lock || true,
+      text: config.text || "Loading",
+      background: config.background || "rgba(0, 0, 0, 0.7)",
     });
   }
   offLoading() {
@@ -51,8 +53,8 @@ export default class _axios {
     }, 500);
   }
 
-  request({ isLoading = true, ...config }: IRequest) {
-    if (isLoading) this.onLoading();
+  request(config: AxiosRequestConfig, { isLoading = true, ...args }: ILoadingConfig) {
+    if (isLoading) this.onLoading(args);
     return this.instance
       .request(config)
       .then((res) => {

@@ -15,7 +15,8 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "@typescript-eslint/no-explicit-any": "off", //非空判斷
+    "@typescript-eslint/no-explicit-any": "off", //可以用any
+    "@typescript-eslint/no-non-null-assertion": "off", //非空判斷
     "@typescript-eslint/no-extra-boolean-cast": "off", //雙驚嘆號
     "newline-per-chained-call": 1, //????垃圾東西
   },

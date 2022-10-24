@@ -15,7 +15,7 @@ export default defineComponent({
   components: {},
   setup() {
     function open() {
-      api.request({ method: "get", url: "/" }).then((res) => {
+      api.request({ method: "get", url: "/" }, { isLoading: true, lock: false, text: "123" }).then((res) => {
         console.log(res);
       });
     }

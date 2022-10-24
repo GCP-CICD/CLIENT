@@ -3,7 +3,7 @@
 
 import type { App } from "vue";
 
-import { ElButton, ElLoading } from "element-plus";
+import { ElButton } from "element-plus";
 const components = [ElButton];
 
 import "element-plus/dist/index.css"; //引入套件全部的css(p.s.也可以按需引入)
