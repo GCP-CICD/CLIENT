@@ -22,6 +22,7 @@ RUN apt-get update
 COPY --from=build-env /app/vue/dist/. /usr/share/nginx/html
 # 改nginx配置
 COPY /nginx/default.conf /etc/nginx/conf.d
+COPY /nginx/nginx.conf /etc/nginx
 
 # cmd 輸指令 
 # 產生 image

@@ -1,8 +1,15 @@
-const { defineConfig } = require("@vue/cli-service")
-const { version } = require("./package.json")
+const { defineConfig } = require("@vue/cli-service");
+const { version } = require("./package.json");
+const path = require("path");
 module.exports = defineConfig({
   transpileDependencies: true,
-  // configureWebpack(config) {},
+  // configureWebpack(config) {
+  //   config.resolve = {
+  //     alias: {
+  //       "@": path.join(__dirname, "./src"),
+  //     },
+  //   };
+  // },
   pages: {
     index: {
       // entry for the page
@@ -17,7 +24,8 @@ module.exports = defineConfig({
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
   },
+
   devServer: {
     historyApiFallback: true, //設為false可模擬SSR(server side render) 當頁面刷新時server返回對應資源，若url沒有就404
   },
-})
+});

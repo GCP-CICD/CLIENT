@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
+    //esnext(未來版本)不需轉化，因為 vuecli 默認babel 去轉
     "target": "esnext",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
-    "moduleResolution": "node",
+    "moduleResolution": "node", //解析模塊的方式 (.js.jsx.node)//https://typescript.bootcss.com/module-resolution.html#node
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -12,12 +13,22 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["webpack-env"],
+    "types": ["webpack-env"], //用webpack覆蓋target的設定
     "paths": {
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "src/lib/api/_axios/a.js",
+    "src/lib/api/_axios/a.js",
+    "src/lib/api/_axios/a.js",
+    "src/lib/api/_axios/a.js"
+  ],
+  "exclude": ["node_modules"] //e.g. 當inclue中有import from"axios" 時，axios為node_modules的文件，排除對axios的解析
 }
