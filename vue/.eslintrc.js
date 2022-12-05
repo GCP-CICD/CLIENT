@@ -18,6 +18,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off", //可以用any
     "@typescript-eslint/no-non-null-assertion": "off", //非空判斷
     "@typescript-eslint/no-extra-boolean-cast": "off", //雙驚嘆號
-    "newline-per-chained-call": 1, //????垃圾東西
+    "newline-per-chained-call": "off", //????垃圾東西,
+    "vue/multi-word-component-names": 0, //home.vue
   },
 };

@@ -1,19 +1,25 @@
+import _cache from "@/lib/_cache";
+import store from "@/store";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "main",
+    component: () => import(/* webpackChunkName: "main" */ "@/views/main/index.vue"),
+    redirect: "/dashboard",
+    children: [
+      {
+        path: "/dashboard",
+        name: "dashboard",
+        component: () => import(/* webpackChunkName: "dashboard" */ "@/views/main/dashboard/index.vue"),
+      },
+    ],
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/login",
+    name: "login",
+    component: () => import(/* webpackChunkName: "login" */ "@/views/login/index.vue"),
   },
 ];
 
@@ -21,5 +27,24 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach(async (to) => {
+  //  console.log(router.getRoutes());
+
+  if (to.path !== "/login") {
+    if (!_cache.getItem("token", "session")) {
+      return "/login";
+    }
+  }
+  if (to.path === "/login") {
+    if (_cache.getItem("token", "session")) {
+      store.dispatch("setMessage", { message: "請勿重複登入" });
+      return "/";
+    }
+  }
+});
+export { addRoute } from "./addRoute";
+export { pathToBreadcrumb } from "./pathToBreadcrumb";
+export { userMenuToRoutes } from "./userMenuToRoutes";
 
 export default router;

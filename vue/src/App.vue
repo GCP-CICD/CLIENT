@@ -1,30 +1,47 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <!-- https://element-plus.org/en-US/guide/i18n.html#configprovider -->
+  <div class="App">
+    <el-config-provider :locale="locale">
+      <router-view></router-view>
+    </el-config-provider>
+  </div>
 </template>
+<script lang="ts">
+import { ElConfigProvider, ElMessage } from "element-plus";
+import zhTw from "element-plus/dist/locale/zh-tw";
+import { computed, defineComponent, inject, watch } from "vue"; //defineComponent函數： 從js角度看無意義，在ts中定義返回類型為type defineComponent 還可以為內部傳入的參數做類型判斷
+import { $lodash } from "./global/register/registerProvide"; //key為Symbol形式，所以另外引入進來
+import { _useStore } from "./store";
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+export default defineComponent({
+  name: "App",
+  components: { ElConfigProvider },
+  setup() {
+    const store = _useStore();
+    const message = computed(() => store.state.message);
+    const lodash = inject($lodash);
 
-nav {
-  padding: 30px;
+    watch(
+      message,
+      lodash!.debounce(
+        () => {
+          ElMessage({
+            showClose: message.value.showClose,
+            message: message.value.message,
+            type: message.value.type,
+          });
+        },
+        1000,
+        // { leading: true },
+      ),
+    );
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+    return { locale: zhTw };
+  },
+});
+</script>
+<style lang="less" scoped>
+.App {
+  .init();
 }
 </style>

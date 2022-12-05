@@ -19,16 +19,7 @@
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
-    "src/lib/api/_axios/a.js",
-    "src/lib/api/_axios/a.js",
-    "src/lib/api/_axios/a.js",
-    "src/lib/api/_axios/a.js"
-  ],
-  "exclude": ["node_modules"] //e.g. 當inclue中有import from"axios" 時，axios為node_modules的文件，排除對axios的解析
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "extensions": [".tsx", ".ts", ".mjs", ".js", ".jsx", ".vue", ".json", ".wasm"],
+  "exclude": ["node_modules"] //e.g. 當inclue中有import from"axios" 時，axios為node_modules的文件，排除對axios的解析,
 }
