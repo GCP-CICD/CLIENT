@@ -2,7 +2,12 @@
   <div class="employees">
     <h2>employees</h2>
     <page-search-form :config="config"> </page-search-form>
-    <page-table :config="config"></page-table>
+    <page-table :config="config">
+      <template #picture="scope">
+        <!-- {{ "$$$" + scope.row }} -->
+        <el-image :src="`/api${scope.row}`" :preview-src-list="[`/api${scope.row}`]" :initial-index="0" />
+      </template>
+    </page-table>
   </div>
 </template>
 

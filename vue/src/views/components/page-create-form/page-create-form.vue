@@ -40,8 +40,6 @@ const formConfig = computed(() => {
   }
   return config;
 });
-console.log(formConfig.value);
-console.log(formDataOrigin);
 
 const formData = ref({ ...formDataOrigin });
 
@@ -53,7 +51,7 @@ const submit = async (formRef: InstanceType<typeof ElForm>) => {
     //script setup都不用value????
     if (valid) {
       console.log("it's valid");
-      await store.dispatch(`main/create`, { pageName: props.pageName, data: formData.value });
+      await store.dispatch(`main/createData`, { pageName: props.pageName, data: formData.value });
       closeMask();
     } else {
       console.log("it's invalid", fields);

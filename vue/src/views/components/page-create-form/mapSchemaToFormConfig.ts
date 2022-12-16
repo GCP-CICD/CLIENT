@@ -7,9 +7,10 @@ export default (schema: any) => {
     if (item.COLUMN_NAME.length > length) length = item.COLUMN_NAME.length;
     switch (item.COLUMN_NAME) {
       // 哪些不動作
-      case "created_at":
       case "id":
+      case "created_at":
       case "updated_at":
+      case "deleted_at":
         break;
 
       // 哪些為select

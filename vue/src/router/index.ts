@@ -29,8 +29,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  //  console.log(router.getRoutes());
-
   if (to.path !== "/login") {
     if (!_cache.getItem("token", "session")) {
       return "/login";

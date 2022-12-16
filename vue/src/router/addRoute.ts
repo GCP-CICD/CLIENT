@@ -11,7 +11,7 @@ export const addRoute = async (role_id: number) => {
     res = _cache.getItem("routes", "session");
   } else {
     //取得路由
-    res = await getRoute(role_id);
+    res = (await getRoute(role_id)).data;
     _cache.setItem("routes", res, "session");
   }
 
@@ -39,5 +39,5 @@ export const addRoute = async (role_id: number) => {
     name: "404",
     component: () => import("@/views/404/index.vue"),
   });
-  res.unshift({ title: "dashboard", path: "/dashboard", icon: "Menu", name: "dashboard", type: 2 }), store.commit("login/USER_MENU", res);
+  res.unshift({ title: "dashboard", path: "/dashboard", icon: "Menu", name: "dashboard", parentId: 0 }), store.commit("login/USER_MENU", res);
 };

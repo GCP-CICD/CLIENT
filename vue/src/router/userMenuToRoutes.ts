@@ -19,7 +19,7 @@ export const userMenuToRoutes = async (userMenu: any[]) => {
       //   if (route) routes.push({ ...route, path: `/${route.path.split("/")[3]}/${route.path.split("/")[4]}` });
       // }
 
-      if (iterator.type === 2) {
+      if (iterator.parentId !== 0) {
         const route = allRoutes.find((v) => `/${v.path.split("/")[2]}/${v.path.split("/")[3]}` === iterator.path);
         if (route) routes.push({ ...route, path: `/${route.path.split("/")[2]}/${route.path.split("/")[3]}` });
       } else {

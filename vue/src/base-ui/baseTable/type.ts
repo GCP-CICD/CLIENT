@@ -1,7 +1,7 @@
 export interface ITableItem {
   model: string;
   label: string;
-  tableWidth?: string;
+  columnWidth?: string;
 }
 export interface ITable {
   tableItem: Array<ITableItem>;

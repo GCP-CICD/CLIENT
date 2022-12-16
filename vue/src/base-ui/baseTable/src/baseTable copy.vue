@@ -2,14 +2,9 @@
   <div class="base-table">
     <slot name="header"></slot>
     <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange" v-bind="childrenProps">
-      <el-table-column v-if="tableSelection" type="selection" align="center"></el-table-column>
+      <el-table-column v-if="tableSelection" type="selection"></el-table-column>
       <template v-for="(v, i) in tableItem" :key="i">
-        <el-table-column
-          :prop="v.model"
-          :label="v.label"
-          :width="v.columnWidth ? v.columnWidth : `${v.label.length * 15}px`"
-          show-overflow-tooltip
-          align="center">
+        <el-table-column :prop="v.model" :label="v.label" :width="v.columnWidth ? v.columnWidth : `${v.label.length * 15}px`" show-overflow-tooltip>
           <!-- 在預設插槽加一個具名slot，引用與否由外部決定，當不引用時也有預設值(slot裡面包的)-->
           <!-- 舉例page-table引用了#table對應到:name='table' -->
           <!-- 外部引用： <template #status="scope"> {{ scope.row }} </template> 其中status對應到slot name-->
@@ -19,7 +14,6 @@
           </template>
         </el-table-column>
       </template>
-      <slot name="extra"></slot>
     </el-table>
     <slot name="footer">
       <el-pagination
@@ -66,13 +60,7 @@ const handleCurrentChange = (val: number) => {
   emit("update:paginationInfo", { ...props.paginationInfo, currentPage: val });
 };
 </script>
-<style lang="less">
+<style scoped lang="less">
 .base-table {
-  .el-table__header {
-    display: inline-block;
-  }
-  .el-table .el-table__cell {
-    z-index: unset;
-  }
 }
 </style>

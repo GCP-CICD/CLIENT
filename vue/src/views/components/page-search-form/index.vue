@@ -34,7 +34,7 @@ export default defineComponent({
     for (const iterator of formConfig.value.formItem) {
       formDataOrigin[`${iterator.model}`] = "";
     }
-    //表單用reactive常有錯誤，在此錯誤為父formData有更新 modelValue未更新 子fromData有更新 功能正常
+    //Day 19: 你可能不知道的 v-model - 為何多選綁定陣列不能用 reactive()? https://ithelp.ithome.com.tw/m/articles/10303899
     const formData = ref({ ...formDataOrigin }); //淺拷貝卻一直改變formDataOrigin????
 
     const clean = () => {
@@ -45,7 +45,7 @@ export default defineComponent({
 
     const store = _useStore();
     const submit = () => {
-      store.dispatch(`main/getPageList`, { pageName: props.config.pageName, query: { ...formData.value } });
+      store.dispatch(`main/readData`, { pageName: props.config.pageName, query: { ...formData.value } });
     };
 
     return { formConfig, formData, clean, submit };

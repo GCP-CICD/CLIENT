@@ -1,5 +1,7 @@
-export default function (config: any) {
-  const { item, tableSelection } = config;
+import { IConfig } from "./type";
+
+export default function (config: IConfig) {
+  const { item } = config;
   const tableItem: Array<any> = [];
 
   item.forEach((v: any) => {
@@ -10,6 +12,6 @@ export default function (config: any) {
 
   return {
     tableItem,
-    tableSelection,
+    ...config,
   };
 }

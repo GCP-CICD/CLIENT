@@ -6,4 +6,5 @@ export interface IConfig {
   item: Array<IFormItem | ITableItem>; //好像不能用IFormItem，因為type是mapping定義的????
   tableSelection?: boolean;
   searchFormLabelWidth?: string;
+  childrenProps?: { rowKey: string; treeProp: { children: string } };
 }

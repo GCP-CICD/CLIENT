@@ -2,7 +2,9 @@
   <div class="my-mask">
     <div class="mask" @click="closeMask"></div>
     <div class="mask-content">
-      <el-icon @click="closeMask"><Close /></el-icon>
+      <div>
+        <el-icon size="30px" @click="closeMask"><Close /></el-icon>
+      </div>
       <slot name="mask-content"></slot>
     </div>
   </div>
@@ -38,11 +40,17 @@ export default defineComponent({
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 11;
-  > div {
-    background-color: white;
-    border-radius: 5px;
+  background-color: white;
+  border-radius: 5px;
+  > div:first-child {
+    ._flex();
+    justify-content: flex-end;
+    padding: 10px 10px 0 0;
+    .el-icon {
+    }
   }
+
   max-height: 80vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 </style>

@@ -50,7 +50,7 @@ export default defineComponent({
 
     const store = _useStore();
     const submit = () => {
-      store.dispatch(`main/getPageList`, { pageName: props.config.pageName, query: { ...formData.value } });
+      store.dispatch(`main/readData`, { pageName: props.config.pageName, query: { ...formData.value } });
     };
 
     return { formConfig, formData, changeFormData, clean, submit };
