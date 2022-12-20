@@ -21,7 +21,18 @@ export const userMenuToRoutes = async (userMenu: any[]) => {
 
       if (iterator.parentId !== 0) {
         const route = allRoutes.find((v) => `/${v.path.split("/")[2]}/${v.path.split("/")[3]}` === iterator.path);
-        if (route) routes.push({ ...route, path: `/${route.path.split("/")[2]}/${route.path.split("/")[3]}` });
+        if (route)
+          routes.push({
+            ...route,
+            path: `/${route.path.split("/")[2]}/${route.path.split("/")[3]}`,
+            meta: {
+              permissionInfo: {
+                view: iterator.permissionView,
+                edit: iterator.permissionEdit,
+                delete: iterator.permissionDelete,
+              },
+            },
+          });
       } else {
         _recurseGetRoute(iterator.children);
       }

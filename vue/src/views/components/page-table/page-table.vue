@@ -26,12 +26,12 @@
       <template #extra>
         <el-table-column v-if="1" label="操作" align="center" width="100px">
           <div class="handler-group">
-            <ElButton size="small" plain type="primary">
+            <ElButton v-if="permissionInfo.edit" size="small" plain type="primary">
               <el-icon>
                 <Edit />
               </el-icon>
             </ElButton>
-            <ElButton size="small" plain type="danger">
+            <ElButton v-if="permissionInfo.delete" size="small" plain type="danger">
               <el-icon>
                 <Delete />
               </el-icon>
@@ -44,6 +44,7 @@
 </template>
 <script lang="ts" setup>
 import baseTable from "@/base-ui/baseTable";
+import { usePermission } from "@/hooks/use-permission";
 import { _useStore } from "@/store";
 import pageCreateForm from "@/views/components/page-create-form/page-create-form.vue";
 import mapTableConfig from "@/views/components/utils/mapTableConfig";
@@ -58,6 +59,7 @@ const props = defineProps({
 });
 
 const store = _useStore();
+const permissionInfo = usePermission() as any; //????
 
 const tableConfig = ref(mapTableConfig(props.config));
 const customSlot = ref(tableConfig.value.tableItem.filter((v) => v.model !== "status" && v.model !== "created_at" && v.model !== "updated_at"));
