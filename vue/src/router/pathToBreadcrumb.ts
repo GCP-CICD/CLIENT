@@ -1,6 +1,6 @@
 function match(userMenu: any[], breadcrumb: any[], pathname: string): any {
   for (const iterator of userMenu) {
-    if (iterator.type === 1) {
+    if (iterator.parentId === 0) {
       const matchingPath = match(iterator.children ?? [], breadcrumb, pathname);
       if (matchingPath) {
         breadcrumb.push(iterator.title);

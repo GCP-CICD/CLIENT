@@ -1,7 +1,7 @@
 <!-- 滿足單向數據流的版本，但rules不生效  因為validator拿不到value -->
 
 <template>
-  <div class="base-form">
+  <div class="baseForm">
     <slot name="header"></slot>
     <el-form :label-width="formLabelWidth">
       <el-row>
@@ -62,7 +62,7 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="less">
-.base-form {
+.baseForm {
   padding: 10px;
 }
 .el-select {

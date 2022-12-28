@@ -3,13 +3,11 @@ import { IConfig } from "./type";
 export default function (config: IConfig) {
   const { item } = config;
   const tableItem: Array<any> = [];
-
-  item.forEach((v: any) => {
+  for (const v of item) {
     tableItem.push({
       ...v,
     });
-  });
-
+  }
   return {
     tableItem,
     ...config,

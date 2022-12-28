@@ -18,6 +18,18 @@ import _cache from "./lib/_cache";
   if (_cache.getItem("token", "session")) {
     await store.dispatch("handleReload");
   }
+  // else {
+  //   console.log(console.log(store));
+
+  //   store.replaceState({
+  //     message: {
+  //       showClose: false,
+  //       message: "",
+  //       type: "success",
+  //     },
+  //   });
+  // }
+  // console.log(store);
 
   app.use(router);
   app.mount("#app");

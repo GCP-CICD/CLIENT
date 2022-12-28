@@ -10,6 +10,7 @@ import {
   ElBreadcrumb,
   ElBreadcrumbItem,
   ElButton,
+  ElButtonGroup,
   ElCheckbox,
   ElCol,
   ElContainer,
@@ -42,6 +43,7 @@ import {
 } from "element-plus";
 const components = [
   ElButton,
+  ElButtonGroup,
   ElIcon,
   ElTabs,
   ElTabPane,
@@ -81,9 +83,10 @@ import "element-plus/dist/index.css"; //引入套件全部的css(p.s.也可以�
 
 export function registerElementPlus(app: App): void {
   // 註冊全局組件
-  components.forEach((v) => {
-    app.component(v.name, v);
-  });
+  for (const iterator of components) {
+    app.component(iterator.name, iterator);
+  }
+
   //註冊全部icons
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component);

@@ -17,7 +17,9 @@ export const addRoute = async (role_id: number) => {
 
   const routes = await userMenuToRoutes(res);
 
-  routes.forEach((v: any) => router.addRoute("main", v));
+  for (const iterator of routes) {
+    router.addRoute("main", iterator);
+  }
   // //格式化路由
   // const routes: Array<RouteRecordRaw> = [];
   // res.map((pv: any) => {

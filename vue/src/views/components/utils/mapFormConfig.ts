@@ -4,8 +4,7 @@ import { IConfig } from "./type";
 export default function (config: IConfig) {
   const { item, searchFormLabelWidth } = config;
   const searchFormItem: Array<IFormItem> = [];
-
-  item.forEach((v) => {
+  for (const v of item) {
     switch (v.model) {
       case "created_at":
       case "updated_at":
@@ -75,7 +74,7 @@ export default function (config: IConfig) {
         });
         break;
     }
-  });
+  }
 
   return {
     formItem: searchFormItem,

@@ -3,7 +3,7 @@
     <div class="mask" @click="closeMask"></div>
     <div class="mask-content">
       <div>
-        <el-icon size="30px" @click="closeMask"><Close /></el-icon>
+        <el-icon size="30px" color="#999" @click="closeMask"><Close /></el-icon>
       </div>
       <slot name="mask-content"></slot>
     </div>
@@ -14,7 +14,6 @@
 import { defineComponent, inject } from "vue";
 
 export default defineComponent({
-  // props: { showMask: { type: Boolean, required: true } },
   setup(props, { emit }) {
     const closeMask = inject<() => void>("closeMask")!;
 
@@ -43,9 +42,11 @@ export default defineComponent({
   background-color: white;
   border-radius: 5px;
   > div:first-child {
+    position: absolute;
+    width: 100%;
     ._flex();
     justify-content: flex-end;
-    padding: 10px 10px 0 0;
+    cursor: pointer;
     .el-icon {
     }
   }

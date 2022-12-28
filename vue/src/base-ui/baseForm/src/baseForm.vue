@@ -1,10 +1,12 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="base-form">
-    <slot name="header"></slot>
+  <div class="baseForm">
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
     <el-form ref="formRef" :model="formDataProps" :label-width="formLabelWidth">
       <el-row>
-        <template v-for="(v, i) in formItem" :key="i">
+        <template v-for="(v, i) in filterForm" :key="i">
           <el-col v-bind="colLayout">
             <el-form-item :prop="v.model" :label="v.label" :rules="v.rules">
               <template v-if="v.elType === 'input' || v.elType === 'password'">
@@ -33,7 +35,7 @@
 </template>
 <script lang="ts">
 import { ElForm } from "element-plus";
-import { defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import type { IFormItem } from "../type";
 
 export default defineComponent({
@@ -54,16 +56,22 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const formRef = ref<InstanceType<typeof ElForm>>();
+    const filterForm = computed(() => props.formItem.filter((v) => !v.isHide));
 
-    return { formRef };
+    return { formRef, filterForm };
   },
 });
 </script>
 <style scoped lang="less">
-.base-form {
+.baseForm {
   padding: 10px;
+  padding-top: unset;
 }
 .el-select {
   width: 100%;
+}
+.header {
+  font-size: 30px;
+  margin: 30px;
 }
 </style>

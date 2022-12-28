@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import myHeader from "./components/header/index.vue";
 import myAside from "./components/aside/index.vue";
+import myHeader from "./components/header/header.vue";
 // import myFooter from "./footer/index.vue";
 import { defineComponent, ref } from "vue";
 export default defineComponent({

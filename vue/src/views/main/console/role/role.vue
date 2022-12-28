@@ -1,14 +1,15 @@
 <template>
   <div class="role">
     <h2>role</h2>
+    <page-search-form :config="config" @handleClickReset="handleClickReset" @handleClickSearch="handleClickSearch"> </page-search-form>
 
-    <page-search-form :config="config"> </page-search-form>
-    <page-table :config="config"></page-table>
+    <page-table ref="pageTableRef" :config="config"></page-table>
   </div>
 </template>
 
 <script lang="ts">
-import pageSearchForm from "@/views/components/page-search-form/index.vue";
+import { usePageSearch } from "@/hooks/use-page-search";
+import pageSearchForm from "@/views/components/page-search-form/page-search-form.vue";
 import pageTable from "@/views/components/page-table/page-table.vue";
 import { defineComponent } from "vue";
 import config from "./config";
@@ -17,7 +18,9 @@ export default defineComponent({
   name: "role",
   components: { pageSearchForm, pageTable },
   setup() {
-    return { config };
+    const [pageTableRef, handleClickReset, handleClickSearch] = usePageSearch();
+
+    return { config, pageTableRef, handleClickReset, handleClickSearch };
   },
 });
 </script>

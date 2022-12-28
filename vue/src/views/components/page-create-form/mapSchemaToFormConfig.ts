@@ -1,12 +1,12 @@
 import { IForm, IFormItem } from "@/base-ui/baseForm";
 import mapRules from "./mapRules";
-export default (schema: any) => {
+export default (schema: any, pageName: string, isEdit: boolean) => {
   const formItem: IFormItem[] = [];
   let length = 0;
   for (const item of schema) {
     if (item.COLUMN_NAME.length > length) length = item.COLUMN_NAME.length;
     switch (item.COLUMN_NAME) {
-      // 哪些不動作
+      //1.先區分哪些不動作，同時區分elType
       case "id":
       case "created_at":
       case "updated_at":
@@ -39,6 +39,7 @@ export default (schema: any) => {
             type: mapType(item),
             placeholder: item.COLUMN_DEFAULT ? `預設為${item.COLUMN_DEFAULT}` : "",
           },
+          isHide: mapIsHide(item, pageName, isEdit),
         });
         break;
     }
@@ -69,4 +70,20 @@ function mapOptions(item: any) {
     default:
       return [{ label: "預設", value: "1" }];
   }
+}
+function mapIsHide(item: any, pageName: string, isEdit: boolean) {
+  switch (pageName) {
+    case "employees":
+      switch (item.COLUMN_NAME) {
+        case "password":
+          return isEdit ? true : false; //不能在該畫面改密碼
+        default:
+          break;
+      }
+      break;
+
+    default:
+      break;
+  }
+  return false;
 }

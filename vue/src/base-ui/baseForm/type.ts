@@ -8,6 +8,7 @@ export interface IFormItem {
   options?: any[];
   bindOptions?: Record<string, unknown> & { type?: string; placeholder?: string; maxlength?: string };
   rules?: any[] | (() => any[]);
+  isHide?: boolean;
 }
 export interface IForm {
   formLabelWidth?: string;

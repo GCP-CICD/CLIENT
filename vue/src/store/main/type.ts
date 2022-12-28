@@ -4,4 +4,6 @@ export interface IMainState {
   route: Array<any>;
   schema: Array<any>;
   count: number;
+  pageSize: number;
+  currentPage: number;
 }
