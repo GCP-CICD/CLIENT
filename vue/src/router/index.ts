@@ -40,6 +40,9 @@ router.beforeEach(async (to) => {
       return "/";
     }
   }
+  if (to.path === "/employees/employees") {
+    await store.dispatch("main/getPageData", { pageName: "role", query: { limit: 100, offset: 0 } });
+  }
 });
 export { addRoute } from "./addRoute";
 export { pathToBreadcrumb } from "./pathToBreadcrumb";

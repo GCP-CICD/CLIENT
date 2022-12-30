@@ -2,7 +2,7 @@
   <div class="create-form">
     <my-mask>
       <template #mask-content>
-        <baseForm ref="formRef" v-bind="formConfig" :formDataProps="formData">
+        <baseForm ref="formRef" v-bind="config" :formDataProps="formData">
           <template #header>
             {{ isEdit ? `Edit ${pageName}` : `New ${pageName}` }}
           </template>
@@ -18,12 +18,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import baseForm, { IForm } from "@/base-ui/baseForm";
+import baseForm from "@/base-ui/baseForm";
+import usePageConfig from "@/hooks/use-page-config";
 import { _useStore } from "@/store";
 import myMask from "@/views/components/myMask/myMask.vue";
 import { ElForm } from "element-plus";
 import { computed, defineProps, inject, ref } from "vue";
-import mapSchemaToFormConfig from "./mapSchemaToFormConfig";
 //為什麼不能用./type
 interface IEditFormValue {
   id: number;
@@ -32,6 +32,8 @@ interface IEditFormValue {
 interface IProps {
   pageName: string;
   editFormValue: IEditFormValue | string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  config: any;
 }
 const props = defineProps<IProps>();
 
@@ -39,8 +41,14 @@ const isEdit = computed(() => !!(props.editFormValue && true));
 const formDataOrigin: any = {};
 
 const store = _useStore();
-const formConfig = ref<IForm>(mapSchemaToFormConfig(store.state.main.schema, props.pageName, isEdit.value));
-for (const iterator of formConfig.value.formItem) {
+
+const { config, watchFn } = usePageConfig({
+  pageType: isEdit.value ? "editForm" : "createForm",
+  pageConfig: props.config[isEdit.value ? "editForm" : "createForm"],
+  itemList: props.config.itemList,
+});
+watchFn();
+for (const iterator of config.value?.itemList) {
   formDataOrigin[`${iterator.model}`] = "";
 }
 

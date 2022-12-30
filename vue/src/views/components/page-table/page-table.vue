@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <baseTable v-model:paginationInfo="paginationInfo" v-bind="tableConfig" :table-data="list" @selection-change="() => {}">
+    <baseTable v-bind="newConfig" :table-data="list" @selection-change="() => {}">
       <template #header>
         <div>list</div>
         <ElButton v-if="permissionInfo.edit" size="small" plain @click="handleClickCreate">create</ElButton>
@@ -37,37 +37,35 @@
         </el-button-group>
       </template>
     </baseTable>
-    <page-create-form v-if="isCreate || isEdit" :pageName="config.pageName" :editFormValue="editFormValue"></page-create-form>
+    <page-create-form v-if="isCreate || isEdit" :pageName="config.pageName" :editFormValue="editFormValue" :config="formConfig"></page-create-form>
   </div>
 </template>
 <script lang="ts" setup>
 import baseTable from "@/base-ui/baseTable";
+import usePageConfig from "@/hooks/use-page-config";
 import { usePermission } from "@/hooks/use-permission";
 import { _useStore } from "@/store";
 import pageCreateForm from "@/views/components/page-create-form/page-create-form.vue";
-import mapTableConfig from "@/views/components/utils/mapTableConfig";
 import { computed, defineExpose, defineProps, PropType, provide, reactive, ref, watch } from "vue";
-import { IConfig } from "../utils/type";
+
 provide("closeMask", closeMask); // 寫在dispatch下面就報錯????
 
 const props = defineProps({
   config: {
-    type: Object as PropType<IConfig>,
+    type: Object as PropType<any>,
     required: true,
   },
 });
 
 const store = _useStore();
 const permissionInfo = reactive(usePermission() as any);
+const { config: newConfig } = usePageConfig({ pageType: "table", pageConfig: props.config["table"], itemList: props.config.itemList });
+const formConfig = computed(() => props.config);
 
-const tableConfig = ref(mapTableConfig(props.config));
-const customSlot = ref(tableConfig.value.tableItem.filter((v) => v.model !== "status" && v.model !== "created_at" && v.model !== "updated_at"));
+const customSlot = computed(() =>
+  newConfig.value.itemList.filter((v) => v.model !== "status" && v.model !== "created_at" && v.model !== "updated_at"),
+);
 
-const paginationInfo = ref({
-  pageSize: 10,
-  currentPage: 1,
-  total: computed(() => store.getters["main/getCount"]),
-});
 const pageSize = computed(() => store.getters["main/getPageSize"]);
 const currentPage = computed(() => store.getters["main/getCurrentPage"]);
 watch([pageSize, currentPage], () => getPageData(), { immediate: true });

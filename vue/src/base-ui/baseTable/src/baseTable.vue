@@ -1,15 +1,10 @@
 <template>
   <div class="base-table">
     <slot name="header"></slot>
-    <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange" v-bind="childrenProps">
-      <el-table-column v-if="tableSelection" type="selection" align="center"></el-table-column>
-      <template v-for="(v, i) in tableItem" :key="i">
-        <el-table-column
-          :prop="v.model"
-          :label="v.label"
-          :width="v.columnWidth ? v.columnWidth : `${v.label.length * 15}px`"
-          show-overflow-tooltip
-          align="center">
+    <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange" v-bind="childrenProps" :default-sort="defaultSort">
+      <el-table-column v-if="selection" type="selection" align="center"></el-table-column>
+      <template v-for="(v, i) in itemList" :key="i">
+        <el-table-column :prop="v.model" :label="v.label" :width="v.columnWidth" show-overflow-tooltip align="center" v-bind="v.bindOptions">
           <!-- 在預設插槽加一個具名slot，引用與否由外部決定，當不引用時也有預設值(slot裡面包的)-->
           <!-- 舉例page-table引用了#table對應到:name='table' -->
           <!-- 外部引用： <template #status="scope"> {{ scope.row }} </template> 其中status對應到slot name-->
@@ -46,26 +41,26 @@
 <script lang="ts" setup>
 import { _useStore } from "@/store";
 import { computed, defineEmits, defineProps, PropType, ref } from "vue";
+import type { IDefaultSort } from "../type";
 const store = _useStore();
 
 const props = defineProps({
   tableData: { type: Array as PropType<any>, required: true },
-  tableItem: {
+  itemList: {
     type: Object,
     required: true,
   },
-  tableSelection: {
+  selection: {
     type: Boolean,
     default: false,
   },
   childrenProps: Object,
-
-  paginationInfo: { type: Object, required: true },
+  defaultSort: Object as PropType<IDefaultSort>,
 });
-const total = computed(() => store.getters["main/getCount"]);
+const total = computed(() => store.getters["main/getPageCount"]);
 const pageSize = computed(() => store.getters["main/getPageSize"]);
 const currentPage = computed(() => store.getters["main/getCurrentPage"]);
-const emit = defineEmits(["selection-change", "update:paginationInfo"]);
+const emit = defineEmits(["selection-change"]);
 
 const handleSelectionChange = (value: any[]) => {
   emit("selection-change", value);
@@ -74,11 +69,9 @@ const handleSelectionChange = (value: any[]) => {
 const disabled = ref(false);
 
 const handleSizeChange = (val: number) => {
-  // emit("update:paginationInfo", { ...props.paginationInfo, pageSize: val });
   store.dispatch("main/changePageSize", val);
 };
 const handleCurrentChange = (val: number) => {
-  // emit("update:paginationInfo", { ...props.paginationInfo, currentPage: val });
   store.dispatch("main/changeCurrentPage", val);
 };
 </script>

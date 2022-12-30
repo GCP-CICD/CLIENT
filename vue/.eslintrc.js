@@ -20,5 +20,12 @@ module.exports = {
     "@typescript-eslint/no-extra-boolean-cast": "off", //雙驚嘆號
     "newline-per-chained-call": "off", //????垃圾東西,
     "vue/multi-word-component-names": 0, //home.vue
+    "no-undef": "off", //tsconfig已經檢查了//https://stackoverflow.com/questions/67437478/why-eslint-dont-see-global-typescript-types-in-vue-files-no-undef
   },
+  // overrides: [
+  //   {
+  //     files: ["*.ts", "*.vue"],
+  //     rules: {},
+  //   },
+  // ],
 };

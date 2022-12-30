@@ -1,10 +1,23 @@
 export interface ITableItem {
-  model: string;
-  label: string;
+  model?: string;
+  label?: string;
   columnWidth?: string;
+  bindOptions?: any;
 }
+export type IDefaultSort = {
+  prop: string;
+  order: "ascending" | "descending";
+};
+export type IChildrenProps = {
+  //不太懂
+  rowKey: string;
+  treeProp: {
+    children: string;
+  };
+};
 export interface ITable {
-  tableItem: Array<ITableItem>;
-  tableSelection: boolean;
-  searchFormLabelWidth: string;
+  itemList: Array<ITableItem>;
+  selection?: boolean;
+  childrenProps?: IChildrenProps;
+  defaultSort?: IDefaultSort;
 }

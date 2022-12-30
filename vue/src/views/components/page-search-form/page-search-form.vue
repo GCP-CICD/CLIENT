@@ -1,6 +1,6 @@
 <template>
   <div class="search-form">
-    <baseForm v-bind="formConfig" :formDataProps="formData">
+    <baseForm v-bind="config" :formDataProps="formData">
       <template #header>
         <h1>header slot</h1>
       </template>
@@ -15,26 +15,34 @@
 </template>
 <script lang="ts" setup>
 import baseForm from "@/base-ui/baseForm";
-import mapFormConfig from "@/views/components/utils/mapFormConfig";
-import { defineEmits, defineProps, PropType, ref } from "vue";
-import { IConfig } from "../utils/type";
+import usePageConfig from "@/hooks/use-page-config";
+import { defineEmits, defineProps, PropType, ref, watch } from "vue";
 
 const props = defineProps({
   config: {
-    type: Object as PropType<IConfig>,
+    type: Object as PropType<any>,
     required: true,
   },
 });
 const emits = defineEmits<{ (...args: any): void }>();
 // const emits = defineEmits(["handleClickReset", "handleClickSearch"]);
 
-const formConfig = ref(mapFormConfig(props.config)); //是否共用schematoconfig
+const { config } = usePageConfig({ pageType: "searchForm", pageConfig: props.config["searchForm"], itemList: props.config.itemList });
+
 const formDataOrigin: any = {};
-for (const iterator of formConfig.value.formItem) {
-  formDataOrigin[`${iterator.model}`] = "";
-}
 //Day 19: 你可能不知道的 v-model - 為何多選綁定陣列不能用 reactive()? https://ithelp.ithome.com.tw/m/articles/10303899
 const formData = ref({ ...formDataOrigin }); //淺拷貝卻一直改變formDataOrigin????
+
+watch(
+  () => config,
+  (n, o) => {
+    for (const iterator of n.value?.itemList) {
+      formDataOrigin[`${iterator.model}`] = "";
+    }
+    formData.value = { ...formDataOrigin };
+  },
+  { immediate: true },
+);
 
 const clean = () => {
   for (const iterator of Object.keys(formData.value)) {

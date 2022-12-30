@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
 import { _useStore } from "@/store";
+import { computed, defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
   // name: "aside", //[Vue warn]: Do not use built-in or reserved HTML elements as component id: aside
@@ -45,6 +45,9 @@ export default defineComponent({
     const router = useRouter();
     const handleMenuItemClick = (path: any) => {
       router.push({ path });
+      // 重置pagenation
+      store.dispatch("main/changePageSize", 10);
+      store.dispatch("main/changeCurrentPage", 1);
     };
     const route = useRoute();
     const activeRoute = computed(() => route.path);

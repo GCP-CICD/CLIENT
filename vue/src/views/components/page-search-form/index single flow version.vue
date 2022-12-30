@@ -1,4 +1,4 @@
-<!-- 滿足單向數據流的版本，見base-form -->
+<!-- 滿足單向數據流的版本，見base-form
 
 <template>
   <div class="search-form">
@@ -33,7 +33,7 @@ export default defineComponent({
   setup(props) {
     const formConfig = ref(mapFormConfig(props.config));
     const formDataOrigin: any = {};
-    for (const iterator of formConfig.value.formItem) {
+    for (const iterator of formConfig.value.itemList) {
       formDataOrigin[`${iterator.model}`] = "";
     }
     //表單用reactive常有錯誤，在此錯誤為父formData有更新 modelValue未更新 子fromData有更新 功能正常
@@ -57,4 +57,4 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped lang="less"></style>
+<style scoped lang="less"></style> -->

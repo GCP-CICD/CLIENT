@@ -6,7 +6,7 @@
     </div>
     <el-form ref="formRef" :model="formDataProps" :label-width="formLabelWidth">
       <el-row>
-        <template v-for="(v, i) in filterForm" :key="i">
+        <template v-for="(v, i) in itemList" :key="i">
           <el-col v-bind="colLayout">
             <el-form-item :prop="v.model" :label="v.label" :rules="v.rules">
               <template v-if="v.elType === 'input' || v.elType === 'password'">
@@ -35,13 +35,13 @@
 </template>
 <script lang="ts">
 import { ElForm } from "element-plus";
-import { computed, defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import type { IFormItem } from "../type";
 
 export default defineComponent({
   props: {
     formDataProps: { type: Object, required: true },
-    formItem: {
+    itemList: {
       type: Array as PropType<IFormItem[]>,
       default: () => [],
     },
@@ -56,9 +56,8 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const formRef = ref<InstanceType<typeof ElForm>>();
-    const filterForm = computed(() => props.formItem.filter((v) => !v.isHide));
 
-    return { formRef, filterForm };
+    return { formRef };
   },
 });
 </script>

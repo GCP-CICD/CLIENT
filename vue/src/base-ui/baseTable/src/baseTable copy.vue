@@ -2,7 +2,7 @@
   <div class="base-table">
     <slot name="header"></slot>
     <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange" v-bind="childrenProps">
-      <el-table-column v-if="tableSelection" type="selection"></el-table-column>
+      <el-table-column v-if="selection" type="selection"></el-table-column>
       <template v-for="(v, i) in tableItem" :key="i">
         <el-table-column :prop="v.model" :label="v.label" :width="v.columnWidth ? v.columnWidth : `${v.label.length * 15}px`" show-overflow-tooltip>
           <!-- 在預設插槽加一個具名slot，引用與否由外部決定，當不引用時也有預設值(slot裡面包的)-->
@@ -38,7 +38,7 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  tableSelection: {
+  selection: {
     type: Boolean,
     default: false,
   },

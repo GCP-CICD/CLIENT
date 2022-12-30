@@ -1,17 +1,16 @@
-type IType = "input" | "password" | "select" | "datepicker";
+export type IType = "input" | "password" | "select" | "datepicker";
 
 export interface IFormItem {
-  elType: IType;
-  model: string;
-  label: string;
+  elType?: IType;
+  model?: string;
+  label?: string;
   placeholder?: string;
   options?: any[];
   bindOptions?: Record<string, unknown> & { type?: string; placeholder?: string; maxlength?: string };
   rules?: any[] | (() => any[]);
-  isHide?: boolean;
 }
 export interface IForm {
   formLabelWidth?: string;
-  formItem: IFormItem[];
-  colLayout?: object;
+  itemList: IFormItem[];
+  colLayout?: { xs: number; sm: number; md: number; lg: number; xl: number }; // 響應式
 }

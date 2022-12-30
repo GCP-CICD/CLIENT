@@ -15,12 +15,11 @@ const main: Module<IMainState, IRootState> = {
     currentPage: 1,
   },
   getters: {
-    pageListData(state) {
-      return (pageName: string) => {
-        return (state as any)[`${pageName}`];
-      };
+    getPageData(state) {
+      return (pageName: string) => (state as any)[`${pageName}`];
     },
-    getCount: (state) => state.count,
+    getPageCount: (state) => state.count,
+    getPageSchema: (state) => state.schema,
     getPageSize: (state) => state.pageSize,
     getCurrentPage: (state) => state.currentPage,
   },

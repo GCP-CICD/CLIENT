@@ -1,4 +1,4 @@
-export default (item: any) => {
+export default (item: any, pageType: string) => {
   const rules = [
     // 解放這行可測試validator
     // {
@@ -11,9 +11,8 @@ export default (item: any) => {
     //   trigger: "change",
     // },
   ];
-  // switch () {
   switch (true) {
-    case item.IS_NULLABLE === "NO" && !item.COLUMN_DEFAULT:
+    case item.IS_NULLABLE === "NO" && !item.COLUMN_DEFAULT && pageType !== "searchForm":
       rules.push({ required: true, message: "Please input", trigger: "blur" });
       break;
 
